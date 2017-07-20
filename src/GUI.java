@@ -1,11 +1,13 @@
+import jdk.nashorn.internal.scripts.JO;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class GUI extends JDialog {
@@ -52,10 +54,14 @@ public class GUI extends JDialog {
         Parser parser = new Parser();
         try {
             parser.parse(new StringTokenizer(textArea1.getText()));
+            Analysis.create(parser.getAnalysis());
         } catch (TokenizerEmptyException e) {
-            JOptionPane.showMessageDialog(null, "Please insert your grader output into the text box before analysing!");
+            JOptionPane.showMessageDialog(null, "Please insert your grader output into the text box before analysing!", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (FunctionsEmptyException e) {
+            JOptionPane.showMessageDialog(null, "No Functions found.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.toString(), "Unexpected Error", JOptionPane.ERROR_MESSAGE);
         }
-        Analysis.create(parser.getAnalysis());
     }
 
     private void onCancel() {
