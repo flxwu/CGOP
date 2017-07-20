@@ -103,9 +103,9 @@ public class Parser {
         double all = answers.size();
         double percent = ((all - incorrect) / all) * 100;
         s += "\n=========================================="
-                + "\nwrap-up: "
+                + "\nWrap-up: "
                 + (int) (all - incorrect) + "/" + (int) all
-                + " , " + (int) percent + "%";
+                + " , " + (int) percent + "% answered correctly";
         return s;
     }
 }
